@@ -36,7 +36,7 @@ public class jdbcpostgreSQL {
          results.add(result.getString("tconst"));
        }
    } catch (Exception e){
-     System.out.println("Error accessing Database.");
+     System.out.println("Error accessing Database." + e.getMessage());
    }
 
     //closing the connection

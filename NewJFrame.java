@@ -223,11 +223,14 @@ public class NewJFrame extends javax.swing.JFrame {
     }                                         
 
     private void simpleSearch_btnActionPerformed(java.awt.event.ActionEvent evt) { 
-        String name = search_ins.getText().substring(0,1).toUpperCase() + search_ins.getText().substring(1);
-        String query = "SELECT * FROM title_basics WHERE primarytitle = ";
-        query += "\'" + name + "\'";
-        query += " AND startyear = " + yearFrom_ins.getText();
-        query += " AND endyear = " + yearTo_ins.getText();
+        String name = search_ins.getText();
+        String query = "SELECT * FROM title_basics WHERE upper(primarytitle) ~ ";
+        query += "\'.*" + name.toUpperCase() + ".*\'";
+        if (!yearFrom_ins.getText().equals("") || !yearTo_ins.getText().equals("")) {
+            query += " AND startyear between " + yearFrom_ins.getText();
+            query += " AND " + yearTo_ins.getText();
+        }
+        System.out.println(query);
         List<String> results = jdbcpostgreSQL.getResults(query);
         System.out.println(results);
     }                                                
