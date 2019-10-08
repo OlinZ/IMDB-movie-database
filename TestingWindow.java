@@ -10,7 +10,7 @@ public class TestingWindow extends JFrame{
     private JLabel text;
     private JPanel panel;
 
-    public mainWindow () {
+    public TestingWindow () {
         setTitle("Movie Searching");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

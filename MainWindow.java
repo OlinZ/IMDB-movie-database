@@ -24,7 +24,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField yearTo_ins;
 
   private DatabaseConnection databaseConnection;
-    public NewJFrame() {
+    public MainWindow() {
         databaseConnection = new DatabaseConnection();
         initComponents();
     }
