@@ -2,10 +2,30 @@
 import java.util.*;
 import java.lang.Object;
 
-public class NewJFrame extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame {
+    //Variables              
+    private javax.swing.JRadioButton chn_rbtn;
+    private javax.swing.JButton clear_btn;
+    private javax.swing.JRadioButton eng_rbtn;
+    private javax.swing.JRadioButton frc_rbtn;
+    private javax.swing.JRadioButton grmn_rbtn;
+    private javax.swing.JRadioButton itl_rbtn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton other_rbtn;
+    private javax.swing.JButton search_btn;
+    private javax.swing.JTextField search_ins;
+    private javax.swing.JButton simpleSearch_btn;
+    private javax.swing.JTextField yearFrom_ins;
+    private javax.swing.JTextField yearTo_ins;
 
-  
-    public NewJFrame() {
+  private DatabaseConnection databaseConnection;
+    public MainWindow() {
+        databaseConnection = new DatabaseConnection();
         initComponents();
     }
 
@@ -231,61 +251,16 @@ public class NewJFrame extends javax.swing.JFrame {
             query += " AND " + yearTo_ins.getText();
         }
         System.out.println(query);
-        List<String> results = jdbcpostgreSQL.getResults(query);
+        List<String> results = databaseConnection.getResults(query);
         System.out.println(results);
     }                                                
 
     private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {                                           
    }                                          
 
-  
-    public static void main(String args[]) {
- 
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        
 
-       java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewJFrame().setVisible(true);
-            }
-        });
-    }
 
-    //Variables
-                   
-    private javax.swing.JRadioButton chn_rbtn;
-    private javax.swing.JButton clear_btn;
-    private javax.swing.JRadioButton eng_rbtn;
-    private javax.swing.JRadioButton frc_rbtn;
-    private javax.swing.JRadioButton grmn_rbtn;
-    private javax.swing.JRadioButton itl_rbtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton other_rbtn;
-    private javax.swing.JButton search_btn;
-    private javax.swing.JTextField search_ins;
-    private javax.swing.JButton simpleSearch_btn;
-    private javax.swing.JTextField yearFrom_ins;
-    private javax.swing.JTextField yearTo_ins;
+
 }
 
 
