@@ -9,7 +9,7 @@ CSCE 315
 public class Testing {
   //new comment
   public static void main(String args[]) {
-    dbSetup my = new dbSetup();
+    DatabaseLogin my = new DatabaseLogin();
     //Building the connection
      Connection conn = null;
      try {
