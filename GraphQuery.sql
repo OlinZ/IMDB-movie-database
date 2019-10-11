@@ -1,7 +1,8 @@
+    create table graph as
     select 
-    min(id),
-    ARRAY_AGG(connected_actors_id),
-    ARRAY_AGG(connecting_movie)
+    min(id) as actor_id,
+    ARRAY_AGG(connected_actors_id) as conected_actor_id,
+    ARRAY_AGG(connecting_movie) as connecting_movie
     from(
         select 
         a1.nconst as id, 
@@ -11,9 +12,10 @@
         join actors_list as a2 
         on a1.knownfortitles_arr && a2.knownfortitles_arr and 
         a1.nconst != a2.nconst
-        where a1.nconst = 'nm0000001';
+        where a1.nconst = 'nm0000001'
     ) as temp
     group by id;
+
 
 
     select 
