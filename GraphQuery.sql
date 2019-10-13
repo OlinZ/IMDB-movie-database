@@ -25,4 +25,4 @@
     join actors_list as a2 
     on a1.knownfortitles_arr && a2.knownfortitles_arr and 
     a1.nconst != a2.nconst
-    where a1.nconst = 'nm0000001';
+    where a1.nconst = 'nm0000034';
