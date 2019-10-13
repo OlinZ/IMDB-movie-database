@@ -1,4 +1,3 @@
-    create table graph as
     select 
     min(id) as actor_id,
     ARRAY_AGG(connected_actors_id) as conected_actor_id,
