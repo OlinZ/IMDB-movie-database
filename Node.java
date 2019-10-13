@@ -27,16 +27,24 @@ public class Node implements Comparable<Node>{
         return nodes;
     }
 
-    public void displayPath(){
+    public ArrayList<String> getPath(){
+        ArrayList<String> out = new ArrayList<String>();
+
         Node iter = this;
 
-        while(iter.prev != null){
-            System.out.println(iter.getActor());
-            System.out.println(iter.getMovie());
+        while(iter != null){
+            out.add(iter.getActor());
+            out.add(iter.getMovie());
             iter = iter.prev;
         }
-        System.out.println(iter.actor);
-        iter = iter.prev;
+        return out;
+
+    }
+    public void displayPath(){
+        ArrayList<String> list = this.getPath();
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i));
+        }
 
     }
 

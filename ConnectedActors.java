@@ -36,7 +36,8 @@ public class ConnectedActors {
             }
         }
 
-        target.displayPath();
+        target.displayPath(); // display the path with the movies
+        target.getPath(); // returns an arraylist with the actors and there connecting movies
 
     }
 
