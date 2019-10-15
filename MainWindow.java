@@ -1,6 +1,7 @@
 // package com.mycompany.myproject1;
 import java.util.*;
-import java.lang.Object;
+import javax.swing.*;
+import java.awt.*;
 
 public class MainWindow extends javax.swing.JFrame {
     //Variables              
@@ -25,10 +26,37 @@ public class MainWindow extends javax.swing.JFrame {
 
   private DatabaseConnection databaseConnection;
     public MainWindow() {
-        databaseConnection = new DatabaseConnection();
-        initComponents();
+//        databaseConnection = new DatabaseConnection();
+//        initComponents();
+        setupFrame();
     }
 
+    private void setupFrame(){
+        setLayout(new GridBagLayout());
+        setMinimumSize(new Dimension(200, 200));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        GridBagConstraints c = new GridBagConstraints();
+
+        JLabel startActor = new JLabel("Start Actor");
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(startActor,c);
+
+        JTextField startActorEntry = new JTextField("Field");
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 5;
+        c.weighty = 1;
+        c.gridx = 1;
+        c.gridy = 0;
+        add(startActorEntry,c);
+
+
+
+
+    }
 
    @SuppressWarnings("unchecked")
    private void initComponents() {
@@ -243,16 +271,16 @@ public class MainWindow extends javax.swing.JFrame {
     }                                         
 
     private void simpleSearch_btnActionPerformed(java.awt.event.ActionEvent evt) { 
-        String name = search_ins.getText();
-        String query = "SELECT * FROM title_basics WHERE upper(primarytitle) ~ ";
-        query += "\'.*" + name.toUpperCase() + ".*\'";
-        if (!yearFrom_ins.getText().equals("") || !yearTo_ins.getText().equals("")) {
-            query += " AND startyear between " + yearFrom_ins.getText();
-            query += " AND " + yearTo_ins.getText();
-        }
-        System.out.println(query);
-        List<String> results = databaseConnection.getResults(query);
-        System.out.println(results);
+//        String name = search_ins.getText();
+//        String query = "SELECT * FROM title_basics WHERE upper(primarytitle) ~ ";
+//        query += "\'.*" + name.toUpperCase() + ".*\'";
+//        if (!yearFrom_ins.getText().equals("") || !yearTo_ins.getText().equals("")) {
+//            query += " AND startyear between " + yearFrom_ins.getText();
+//            query += " AND " + yearTo_ins.getText();
+//        }
+//        System.out.println(query);
+//        List<String> results = databaseConnection.getResults(query);
+//        System.out.println(results);
     }                                                
 
     private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {                                           
