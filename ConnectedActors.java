@@ -7,10 +7,19 @@ public class ConnectedActors {
     private NormalQueue<Node> queue;
     private String startActor;
     private String endActor;
-
+    private String excludeActor;
+    
     public ConnectedActors(String a1, String a2){
         startActor = a1;
         endActor = a2;
+        conn = new DatabaseConnection();
+        queue = new NormalQueue<Node> ();
+    }
+
+    public ConnectedActors(String a1, String a2, String a3){
+        startActor = a1;
+        endActor = a2;
+        excludeActor = a3;
         conn = new DatabaseConnection();
         queue = new NormalQueue<Node> ();
     }
