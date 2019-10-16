@@ -104,41 +104,18 @@ public class DatabaseConnection {
     return name;
   }
 
-  public List<String> getActors(String query) {
-    List<String> results = new ArrayList<String>();
+  public ResultSet getResults(String query) {
+    ResultSet result;
+     try{
+       Statement stmt = conn.createStatement();
+        result = stmt.executeQuery(query);
+        // System.out.println(query);
+        return result;
+   } catch (Exception e){
+     System.out.println("Error accessing Database." + e.getMessage());
+     return null;
 
-    try {
-      Statement stmt = conn.createStatement();
-      ResultSet result = stmt.executeQuery(query);
-
-      System.out.println(query);
-      System.out.println("______________________________________");
-      while (result.next()) {
-        results.add(result.getString("nconst"));
-      }
-    } catch (Exception e) {
-      System.out.println("Error accessing Database." + e.getMessage());
-    }
-    return results;
-  }
-
-  public List<String> getMovies(String query) {
-    List<String> results = new ArrayList<String>();
-
-    try {
-      Statement stmt = conn.createStatement();
-      ResultSet result = stmt.executeQuery(query);
-
-      System.out.println(query);
-      System.out.println("______________________________________");
-      while (result.next()) {
-        results.add(result.getString("primarytitle"));
-        results.add(result.getString("tconst"));
-      }
-    } catch (Exception e) {
-      System.out.println("Error accessing Database." + e.getMessage());
-    }
-    return results;
+   }
   }
 
   public void closeConnection() {

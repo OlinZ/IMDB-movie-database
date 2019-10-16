@@ -1,291 +1,363 @@
 
 // package com.mycompany.myproject1;
 import java.util.*;
-import java.lang.Object;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainWindow extends javax.swing.JFrame {
-        // Variables
-        private javax.swing.JRadioButton chn_rbtn;
-        private javax.swing.JButton clear_btn;
-        private javax.swing.JRadioButton eng_rbtn;
-        private javax.swing.JRadioButton frc_rbtn;
-        private javax.swing.JRadioButton grmn_rbtn;
-        private javax.swing.JRadioButton itl_rbtn;
-        private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JLabel jLabel3;
-        private javax.swing.JPanel jPanel1;
-        private javax.swing.JPanel jPanel2;
-        private javax.swing.JPanel jPanel3;
-        private javax.swing.JRadioButton other_rbtn;
-        private javax.swing.JButton search_btn;
-        private javax.swing.JTextField search_ins;
-        private javax.swing.JButton simpleSearch_btn;
-        private javax.swing.JTextField yearFrom_ins;
-        private javax.swing.JTextField yearTo_ins;
 
-        private DatabaseConnection databaseConnection;
+	private JPanel resultsPanel = new JPanel() ;
 
-        public MainWindow() {
-                databaseConnection = new DatabaseConnection();
-                initComponents();
-        }
 
-        @SuppressWarnings("unchecked")
-        private void initComponents() {
+  private DatabaseConnection databaseConnection;
+    public MainWindow() {
+//        databaseConnection = new DatabaseConnection();
+//        initComponents();
+        setupFrame();
+    }
 
-                jPanel1 = new javax.swing.JPanel();
-                jLabel1 = new javax.swing.JLabel();
-                search_ins = new javax.swing.JTextField();
-                search_btn = new javax.swing.JButton();
-                clear_btn = new javax.swing.JButton();
-                jPanel2 = new javax.swing.JPanel();
-                eng_rbtn = new javax.swing.JRadioButton();
-                chn_rbtn = new javax.swing.JRadioButton();
-                itl_rbtn = new javax.swing.JRadioButton();
-                grmn_rbtn = new javax.swing.JRadioButton();
-                frc_rbtn = new javax.swing.JRadioButton();
-                other_rbtn = new javax.swing.JRadioButton();
-                simpleSearch_btn = new javax.swing.JButton();
-                jPanel3 = new javax.swing.JPanel();
-                jLabel2 = new javax.swing.JLabel();
-                jLabel3 = new javax.swing.JLabel();
-                yearFrom_ins = new javax.swing.JTextField();
-                yearTo_ins = new javax.swing.JTextField();
+    private void setupFrame(){
+        setLayout(new GridBagLayout());
+        setMinimumSize(new Dimension(600, 400));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        JLabel queryPanel = new JLabel();
+        queryPanel.setLayout(new GridBagLayout());
+        queryPanel.setBorder(BorderFactory.createTitledBorder("Movie Search"));
+        queryPanel.setVisible(true);
 
-                jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Movie Search"));
 
-                jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18));
-                jLabel1.setText("Search");
 
-                search_btn.setText("Advanced Search");
-                search_btn.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                search_btnActionPerformed(evt);
-                        }
-                });
+        GridBagConstraints j = new GridBagConstraints();
 
-                clear_btn.setText("Clear");
-                clear_btn.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                clear_btnActionPerformed(evt);
-                        }
-                });
+        BufferedImage myPicture;
+		try {
+			j.fill = GridBagConstraints.CENTER;
+	        j.weightx = 1;
+	        j.weighty = 1;
+	        j.gridx = 0;
+	        j.gridy = 0;
+			myPicture = ImageIO.read(new File("Logo.png"));
+			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+	        add(picLabel);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
-                jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Language"));
 
-                eng_rbtn.setText("English");
+    	JPanel question1Panel = new JPanel();
+    	question1Panel.setLayout(new GridBagLayout());
+        GridBagConstraints p = new GridBagConstraints();
+        question1Panel.setVisible(true);
 
-                chn_rbtn.setText("Chinees");
 
-                itl_rbtn.setText("Italian");
+        JLabel startActor = new JLabel("Start Actor");
+        p.fill = GridBagConstraints.CENTER;
+        p.weightx = 1;
+        p.weighty = 1;
+        p.gridx = 0;
+        p.gridy = 0;
+        question1Panel.add(startActor,p);
 
-                grmn_rbtn.setText("German");
+        JTextField startActorEntry = new JTextField(1);
+        p.fill = GridBagConstraints.HORIZONTAL;
+        p.weightx = 5;
+        p.weighty = 1;
+        p.gridx = 1;
+        p.gridy = 0;
+        question1Panel.add(startActorEntry,p);
 
-                frc_rbtn.setText("French");
+        JLabel endActor = new JLabel("End Actor");
+        p.fill = GridBagConstraints.CENTER;
+        p.weightx = 1;
+        p.weighty = 1;
+        p.gridx = 2;
+        p.gridy = 0;
+        question1Panel.add(endActor, p);
 
-                other_rbtn.setText("Other");
+        JTextField endActorEntry = new JTextField(1);
+        p.fill = GridBagConstraints.HORIZONTAL;
+        p.weightx = 5;
+        p.weighty = 1;
+        p.gridx = 3;
+        p.gridy = 0;
+        question1Panel.add(endActorEntry,p);
 
-                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-                jPanel2.setLayout(jPanel2Layout);
-                jPanel2Layout.setHorizontalGroup(jPanel2Layout
-                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addGroup(jPanel2Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(eng_rbtn).addComponent(chn_rbtn))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27,
-                                                                Short.MAX_VALUE)
-                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(itl_rbtn).addComponent(grmn_rbtn))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(other_rbtn).addComponent(frc_rbtn))
-                                                .addGap(21, 21, 21)));
-                jPanel2Layout.setVerticalGroup(jPanel2Layout
-                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addGroup(jPanel2Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(eng_rbtn).addComponent(itl_rbtn).addComponent(frc_rbtn))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(chn_rbtn).addComponent(grmn_rbtn)
-                                                                .addComponent(other_rbtn))
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                Short.MAX_VALUE)));
+        JLabel excludeActor = new JLabel("Exclude Actor");
+        p.fill = GridBagConstraints.CENTER;
+        p.weightx = 1;
+        p.weighty = 1;
+        p.gridx = 4;
+        p.gridy = 0;
+        question1Panel.add(excludeActor, p);
 
-                simpleSearch_btn.setText("Simple Search");
-                simpleSearch_btn.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                simpleSearch_btnActionPerformed(evt);
-                        }
-                });
+        JTextField excludeActorEntry = new JTextField(1);
+        p.fill = GridBagConstraints.HORIZONTAL;
+        p.weightx = 5;
+        p.weighty = 1;
+        p.gridx = 5;
+        p.gridy = 0;
+        question1Panel.add(excludeActorEntry,p);
 
-                jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Year"));
+        JButton question1Search = new JButton("Go");
+        p.fill = GridBagConstraints.EAST;
+        p.weightx = 1;
+        p.weighty = 1;
+        p.gridx = 6;
+        p.gridy = 0;
+        question1Panel.add(question1Search, p);
+        question1Search.addActionListener(new ActionListener() {
 
-                jLabel2.setText("From");
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Buttion pressed");
+				connectedActors(startActorEntry.getText(), endActorEntry.getText(), excludeActorEntry.getText());
 
-                jLabel3.setText("To");
+			}
+		});
 
-                javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-                jPanel3.setLayout(jPanel3Layout);
-                jPanel3Layout.setHorizontalGroup(jPanel3Layout
-                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(jPanel3Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jLabel2).addComponent(jLabel3))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel3Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(yearFrom_ins).addComponent(yearTo_ins,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                60,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addContainerGap()));
-                jPanel3Layout.setVerticalGroup(jPanel3Layout
-                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(jPanel3Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(jLabel2).addComponent(yearFrom_ins,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel3Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(jLabel3).addComponent(yearTo_ins,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))));
+        JPanel question2Panel = new JPanel();
+        question2Panel.setLayout(new GridBagLayout());
+        GridBagConstraints p1 = new GridBagConstraints();
 
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-                jPanel1.setLayout(jPanel1Layout);
-                jPanel1Layout.setHorizontalGroup(jPanel1Layout
-                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout
-                                                .createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                                .addContainerGap(
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(clear_btn)
-                                                                                .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(search_btn))
-                                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                                .addGap(20, 20, 20)
-                                                                                .addComponent(jLabel1)
-                                                                                .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                .addGroup(jPanel1Layout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                                false)
-                                                                                                .addComponent(jPanel2,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addComponent(search_ins))
-                                                                                .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addGroup(jPanel1Layout
-                                                                                                .createParallelGroup(
-                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                .addComponent(jPanel3,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                .addGroup(jPanel1Layout
-                                                                                                                .createSequentialGroup()
-                                                                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                                                                .addComponent(simpleSearch_btn)))))
-                                                .addGap(411, 411, 411)));
-                jPanel1Layout.setVerticalGroup(jPanel1Layout
-                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup().addGap(27, 27, 27)
-                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(search_ins,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(simpleSearch_btn).addComponent(jLabel1))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(jPanel2,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addComponent(jPanel3,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(search_btn).addComponent(clear_btn))));
+        JLabel startYearLabel = new JLabel("Start Year");
+        p1.fill = GridBagConstraints.CENTER;
+        p1.weightx = 1;
+        p1.weighty = 1;
+        p1.gridx = 0;
+        p1.gridy = 0;
+        question2Panel.add(startYearLabel, p1);
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                getContentPane().setLayout(layout);
-                layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup().addContainerGap()
-                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 566,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                Short.MAX_VALUE)));
-                layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup().addContainerGap()
-                                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addContainerGap()));
+        JTextField startYearTextField = new JTextField(1);
+        p1.fill = GridBagConstraints.HORIZONTAL;
+        p1.weightx = 5;
+        p1.weighty = 1;
+        p1.gridx = 1;
+        p1.gridy = 0;
+        question2Panel.add(startYearTextField, p1);
 
-                pack();
-        }
 
-        private void clear_btnActionPerformed(java.awt.event.ActionEvent evt) {
+        JLabel endYearLabel = new JLabel("End Year");
+        p1.fill = GridBagConstraints.CENTER;
+        p1.weightx = 1;
+        p1.weighty = 1;
+        p1.gridx = 2;
+        p1.gridy = 0;
+        question2Panel.add(endYearLabel, p1);
 
-                search_ins.setText("");
-                yearFrom_ins.setText("");
-                yearTo_ins.setText("");
-                other_rbtn.setSelected(false);
-                eng_rbtn.setSelected(false);
-                frc_rbtn.setSelected(false);
-                grmn_rbtn.setSelected(false);
-                chn_rbtn.setSelected(false);
-                itl_rbtn.setSelected(false);
+        JTextField endYearTextField = new JTextField(1);
+        p1.fill = GridBagConstraints.HORIZONTAL;
+        p1.weightx = 5;
+        p1.weighty = 1;
+        p1.gridx = 3;
+        p1.gridy = 0;
+        question2Panel.add(endYearTextField, p1);
 
-        }
+        JLabel excludeLabel = new JLabel("Exclude Actor");
+        p1.fill = GridBagConstraints.CENTER;
+        p1.weightx = 1;
+        p1.weighty = 1;
+        p1.gridx = 4;
+        p1.gridy = 0;
+        question2Panel.add(excludeLabel, p1);
 
-        private void simpleSearch_btnActionPerformed(java.awt.event.ActionEvent evt) {
-                String name = search_ins.getText();
-                String query = "SELECT * FROM title_basics WHERE upper(primarytitle) ~ ";
-                query += "\'.*" + name.toUpperCase() + ".*\'";
-                if (!yearFrom_ins.getText().equals("") || !yearTo_ins.getText().equals("")) {
-                        query += " AND startyear between " + yearFrom_ins.getText();
-                        query += " AND " + yearTo_ins.getText();
-                }
-                System.out.println(query);
-                List<String> results = databaseConnection.getMovies(query);
-                System.out.println(results);
-        }
+        JTextField excludeLabelEntry = new JTextField(1);
+        p1.fill = GridBagConstraints.HORIZONTAL;
+        p1.weightx = 5;
+        p1.weighty = 1;
+        p1.gridx = 5;
+        p1.gridy = 0;
+        question2Panel.add(excludeLabelEntry, p1);
 
-        private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {
-                // System.out.println("abc");
-                int startYear = Integer.parseInt(yearFrom_ins.getText());
-                int endYear = Integer.parseInt(yearTo_ins.getText());
-                System.out.println(databaseConnection.getLeastMovies(startYear, endYear));
-        }
 
+        JButton question2Search = new JButton("Go");
+        p1.fill = GridBagConstraints.EAST;
+        p1.weightx = 1;
+        p1.weighty = 1;
+        p1.gridx = 6;
+        p1.gridy = 0;
+        question2Panel.add(question2Search, p1);
+        question2Search.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shortestList(startYearTextField.getText(), endYearTextField.getText(), excludeActorEntry.getText());
+			}
+		});
+
+
+        JPanel question4Panel = new JPanel();
+        question4Panel.setLayout(new GridBagLayout());
+        GridBagConstraints p3 = new GridBagConstraints();
+
+        JLabel movieLabel = new JLabel("Movie");
+        p3.fill = GridBagConstraints.CENTER;
+        p3.weightx = 1;
+        p3.weighty = 1;
+        p3.gridx = 0;
+        p3.gridy = 0;
+        question4Panel.add(movieLabel, p3);
+
+        JTextField movieTextField = new JTextField(1);
+        p3.fill = GridBagConstraints.HORIZONTAL;
+        p3.weightx = 5;
+        p3.weighty = 1;
+        p3.gridx = 1;
+        p3.gridy = 0;
+        question4Panel.add(movieTextField, p3);
+
+        JLabel yearLabel = new JLabel("Year");
+        p3.fill = GridBagConstraints.CENTER;
+        p3.weightx = 1;
+        p3.weighty = 1;
+        p3.gridx = 2;
+        p3.gridy = 0;
+        question4Panel.add(yearLabel, p3);
+
+        JTextField yearTextField = new JTextField(1);
+        p3.fill = GridBagConstraints.HORIZONTAL;
+        p3.weightx = 5;
+        p3.weighty = 1;
+        p3.gridx = 3;
+        p3.gridy = 0;
+        question4Panel.add(yearTextField, p3);
+
+
+        JLabel genreLabel = new JLabel("Genre");
+        p3.fill = GridBagConstraints.CENTER;
+        p3.weightx = 1;
+        p3.weighty = 1;
+        p3.gridx = 5;
+        p3.gridy = 0;
+        question4Panel.add(genreLabel, p3);
+
+        JTextField genreTextField = new JTextField(1);
+        p3.fill = GridBagConstraints.HORIZONTAL;
+        p3.weightx = 5;
+        p3.weighty = 1;
+        p3.gridx = 6;
+        p3.gridy = 0;
+        question4Panel.add(genreTextField, p3);
+
+        JButton question4Search = new JButton("Go");
+        p3.fill = GridBagConstraints.EAST;
+        p3.weightx = 1;
+        p3.weighty = 1;
+        p3.gridx = 7;
+        p3.gridy = 0;
+        question4Panel.add(question4Search, p3);
+        question4Search.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				movieSuggestion(movieTextField.getText(), genreTextField.getText(), yearTextField.getText());
+
+			}
+		});
+
+        JPanel radioButtonPanel = new JPanel();
+        radioButtonPanel.setLayout(new GridBagLayout());
+        radioButtonPanel.setBorder(BorderFactory.createTitledBorder("Language Selection"));
+
+        GridBagConstraints r = new GridBagConstraints();
+        r.weightx=1;
+        r.weighty=1;
+        r.fill = GridBagConstraints.BOTH;
+
+
+
+        JRadioButton enRadio = new JRadioButton("English");
+        r.gridx=0;
+        r.gridy=0;
+        radioButtonPanel.add(enRadio, r);
+
+        JRadioButton itRadio = new JRadioButton("Italian");
+        r.gridx=1;
+        r.gridy=0;
+        radioButtonPanel.add(itRadio, r);
+
+        JRadioButton frRadio = new JRadioButton("French");
+        r.gridx=2;
+        r.gridy=0;
+        radioButtonPanel.add(frRadio, r);
+
+        JRadioButton chRadio = new JRadioButton("Chinesse");
+        r.gridx=0;
+        r.gridy=1;
+        radioButtonPanel.add(chRadio, r);
+
+        JRadioButton grRadio = new JRadioButton("German");
+        r.gridx=1;
+        r.gridy=1;
+        radioButtonPanel.add(grRadio, r);
+
+        JRadioButton oRadio = new JRadioButton("Other");
+        r.gridx=2;
+        r.gridy=1;
+        radioButtonPanel.add(oRadio, r);
+
+
+        j.fill = GridBagConstraints.BOTH;
+        j.weightx = 1;
+        j.weighty = 1;
+        j.gridx = 0;
+        j.gridy = 0;
+        queryPanel.add(question1Panel, j);
+        j.gridy = 1;
+        queryPanel.add(question2Panel, j);
+
+        j.gridy = 3;
+        queryPanel.add(question4Panel,j);
+        j.gridy = 4;
+        queryPanel.add(radioButtonPanel,j);
+
+        j.gridy = 1;
+        add(queryPanel, j);
+
+        j.gridy = 1;
+        add(resultsPanel, j);
+
+
+
+    }
+
+    private void connectedActors(String startActor, String endActor, String excludeActor) {
+    	if(startActor.equals("") || endActor.equals("")) {
+    		JOptionPane.showMessageDialog(this,
+    			    "Start Actor or End Actor can not be empty.",
+    			    "Input Error",
+    			    JOptionPane.ERROR_MESSAGE);
+    	}
+
+    	System.out.println(startActor + endActor + excludeActor);
+//    	ConnectedActors temp = new ConnectedActors(startActor, endActor, excludeActor);
+    }
+
+    private void shortestList(String startYear, String endYear, String excludeActor) {
+    	if(startYear.equals("") || endYear.equals("")) {
+    		JOptionPane.showMessageDialog(this,
+    			    "Start Year or End Year cannot be empty.",
+    			    "Input Error",
+    			    JOptionPane.ERROR_MESSAGE);
+    	}
+    	System.out.println(startYear + endYear + excludeActor);
+    }
+
+    private void movieSuggestion(String movie, String genre, String year) {
+    	if(movie.equals("") || genre.equals("") || year.equals("")) {
+    		JOptionPane.showMessageDialog(this,
+    			    "Movie or Genre or Year cannot be empty.",
+    			    "Input Error",
+    			    JOptionPane.ERROR_MESSAGE);
+    	}
+    	System.out.println(movie + genre + year);
+
+    }
 }
