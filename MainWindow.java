@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class MainWindow extends javax.swing.JFrame {
 
+
     private JPanel resultsPanel = new JPanel() ;
 
     private final String NORESULTS = "No Results";
@@ -24,18 +25,14 @@ public class MainWindow extends javax.swing.JFrame {
     private final String SHORTESTLIST = "Shortest List";
     private final String BESTGENRE = "Best Genre";
     private final String SUGGESTEDMOVIE = "Suggested Movie";
+    private DatabaseConnection databaseConnection;
 
-
-
-
-  private DatabaseConnection databaseConnection;
     public MainWindow() {
        databaseConnection = new DatabaseConnection();
-//        initComponents();
         setupFrame();
     }
 
-    private void setupFrame(){
+    private void setupFrame() {
         setLayout(new GridBagLayout());
         setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,7 +45,21 @@ public class MainWindow extends javax.swing.JFrame {
         GridBagConstraints j = new GridBagConstraints();
 
 
-         JPanel question1Panel = new JPanel();
+        BufferedImage myPicture;
+        try {
+            j.fill = GridBagConstraints.CENTER;
+            j.weightx = 1;
+            j.weighty = 1;
+            j.gridx = 0;
+            j.gridy = 0;
+            myPicture = ImageIO.read(new File("Logo.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+            add(picLabel);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        JPanel question1Panel = new JPanel();
         question1Panel.setLayout(new GridBagLayout());
         GridBagConstraints p = new GridBagConstraints();
         question1Panel.setVisible(true);
@@ -59,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
         p.weighty = 1;
         p.gridx = 0;
         p.gridy = 0;
-        question1Panel.add(startActor,p);
+        question1Panel.add(startActor, p);
 
         JTextField startActorEntry = new JTextField(1);
         p.fill = GridBagConstraints.HORIZONTAL;
@@ -67,7 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
         p.weighty = 1;
         p.gridx = 1;
         p.gridy = 0;
-        question1Panel.add(startActorEntry,p);
+        question1Panel.add(startActorEntry, p);
 
         JLabel endActor = new JLabel("End Actor");
         p.fill = GridBagConstraints.CENTER;
@@ -83,7 +94,7 @@ public class MainWindow extends javax.swing.JFrame {
         p.weighty = 1;
         p.gridx = 3;
         p.gridy = 0;
-        question1Panel.add(endActorEntry,p);
+        question1Panel.add(endActorEntry, p);
 
         JLabel excludeActor = new JLabel("Exclude Actor");
         p.fill = GridBagConstraints.CENTER;
@@ -99,7 +110,7 @@ public class MainWindow extends javax.swing.JFrame {
         p.weighty = 1;
         p.gridx = 5;
         p.gridy = 0;
-        question1Panel.add(excludeActorEntry,p);
+        question1Panel.add(excludeActorEntry, p);
 
         JButton question1Search = new JButton("Go");
         p.fill = GridBagConstraints.EAST;
@@ -110,14 +121,14 @@ public class MainWindow extends javax.swing.JFrame {
         question1Panel.add(question1Search, p);
         question1Search.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Buttion pressed");
-				connectedActors(startActorEntry.getText(), endActorEntry.getText(), excludeActorEntry.getText());
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Buttion pressed");
+                connectedActors(startActorEntry.getText(), endActorEntry.getText(), excludeActorEntry.getText());
 
-			}
+            }
         });
-        
+
         JPanel question2Panel = new JPanel();
         question2Panel.setLayout(new GridBagLayout());
         GridBagConstraints p1 = new GridBagConstraints();
@@ -251,7 +262,6 @@ public class MainWindow extends javax.swing.JFrame {
 			}
 		});
 
-
         JPanel question4Panel = new JPanel();
         question4Panel.setLayout(new GridBagLayout());
         GridBagConstraints p3 = new GridBagConstraints();
@@ -288,7 +298,6 @@ public class MainWindow extends javax.swing.JFrame {
         p3.gridy = 0;
         question4Panel.add(yearTextField, p3);
 
-
         JLabel genreLabel = new JLabel("Genre");
         p3.fill = GridBagConstraints.CENTER;
         p3.weightx = 1;
@@ -314,52 +323,50 @@ public class MainWindow extends javax.swing.JFrame {
         question4Panel.add(question4Search, p3);
         question4Search.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				movieSuggestion(movieTextField.getText(), genreTextField.getText(), yearTextField.getText());
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                movieSuggestion(movieTextField.getText(), genreTextField.getText(), yearTextField.getText());
 
-			}
-		});
+            }
+        });
 
         JPanel radioButtonPanel = new JPanel();
         radioButtonPanel.setLayout(new GridBagLayout());
         radioButtonPanel.setBorder(BorderFactory.createTitledBorder("Language Selection"));
 
         GridBagConstraints r = new GridBagConstraints();
-        r.weightx=1;
-        r.weighty=1;
+        r.weightx = 1;
+        r.weighty = 1;
         r.fill = GridBagConstraints.BOTH;
 
-
-
         JRadioButton enRadio = new JRadioButton("English");
-        r.gridx=0;
-        r.gridy=0;
+        r.gridx = 0;
+        r.gridy = 0;
         radioButtonPanel.add(enRadio, r);
 
         JRadioButton itRadio = new JRadioButton("Italian");
-        r.gridx=1;
-        r.gridy=0;
+        r.gridx = 1;
+        r.gridy = 0;
         radioButtonPanel.add(itRadio, r);
 
         JRadioButton frRadio = new JRadioButton("French");
-        r.gridx=2;
-        r.gridy=0;
+        r.gridx = 2;
+        r.gridy = 0;
         radioButtonPanel.add(frRadio, r);
 
         JRadioButton chRadio = new JRadioButton("Chinesse");
-        r.gridx=0;
-        r.gridy=1;
+        r.gridx = 0;
+        r.gridy = 1;
         radioButtonPanel.add(chRadio, r);
 
         JRadioButton grRadio = new JRadioButton("German");
-        r.gridx=1;
-        r.gridy=1;
+        r.gridx = 1;
+        r.gridy = 1;
         radioButtonPanel.add(grRadio, r);
 
         JRadioButton oRadio = new JRadioButton("Other");
-        r.gridx=2;
-        r.gridy=1;
+        r.gridx = 2;
+        r.gridy = 1;
         radioButtonPanel.add(oRadio, r);
 
         resultsPanel.setLayout(new CardLayout());
@@ -380,7 +387,6 @@ public class MainWindow extends javax.swing.JFrame {
         CardLayout c1 = (CardLayout)(resultsPanel.getLayout());
         c1.show(resultsPanel, NORESULTS);
 
-
         j.fill = GridBagConstraints.BOTH;
         j.weightx = 1;
         j.weighty = 2;
@@ -392,9 +398,9 @@ public class MainWindow extends javax.swing.JFrame {
         j.gridy = 2;
         queryPanel.add(questions3Panel, j);
         j.gridy = 3;
-        queryPanel.add(question4Panel,j);
+        queryPanel.add(question4Panel, j);
         j.gridy = 4;
-        queryPanel.add(radioButtonPanel,j);
+        queryPanel.add(radioButtonPanel, j);
 
         j.gridy = 1;
         add(queryPanel, j);
@@ -424,6 +430,7 @@ public class MainWindow extends javax.swing.JFrame {
             System.err.println("Error in getting genres. " + e.getMessage());
         }
         return null;
+
     }
 
 
@@ -461,13 +468,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void movieSuggestion(String movie, String genre, String year) {
-    	if(movie.equals("") || genre.equals("") || year.equals("")) {
-    		JOptionPane.showMessageDialog(this,
-    			    "Movie or Genre or Year cannot be empty.",
-    			    "Input Error",
-    			    JOptionPane.ERROR_MESSAGE);
-    	}
-    	System.out.println(movie + genre + year);
+        if (movie.equals("") || genre.equals("") || year.equals("")) {
+            JOptionPane.showMessageDialog(this, "Movie or Genre or Year cannot be empty.", "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        System.out.println(movie + genre + year);
 
     }
 
