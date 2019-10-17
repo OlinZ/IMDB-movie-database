@@ -9,11 +9,8 @@ CSCE 315
  */
 public class DatabaseConnection {
   private Connection conn = null;
-  private Map<String, List<String[]>> actorGraph;
-  private final String GET_ACTORS = "SELECT nconst, knownfortitles FROM actors limit 10";
 
   public DatabaseConnection() {
-    actorGraph = new HashMap<String, List<String[]>>();
     try {
       Class.forName("org.postgresql.Driver");
       conn = DriverManager.getConnection("jdbc:postgresql://db-315.cse.tamu.edu/605team6", DatabaseLogin.user,
@@ -43,22 +40,20 @@ public class DatabaseConnection {
   // }
   // }
 
-  public List<String> getLeastMovies(int startYear, int endYear) {
+  public List<String> getLeastMovies(int startYear, int endYear, String excludeActor) {
     List<String> directors = new ArrayList<String>();
     Map<String, Integer> directorNumMovies = new HashMap<String, Integer>();
     String query = "SELECT directors FROM title_crew INNER JOIN title_basics ON title_crew.tconst = title_basics.tconst where title_basics.startYear BETWEEN "
         + startYear + " AND " + endYear;
     try {
-      // System.out.println("abc");
       Statement stmt = conn.createStatement();
       ResultSet result = stmt.executeQuery(query);
 
-      System.out.println(query);
-      System.out.println("______________________________________");
+      // System.out.println(query);
+      // System.out.println("______________________________________");
       while (result.next()) {
         String[] directorList = result.getString("directors").split("\\s*,\\s*");
         for (int k = 0; k < directorList.length; k++) {
-          // System.out.println(directorList[k]);
           if (!directorNumMovies.containsKey(directorList[k])) {
             directorNumMovies.put(directorList[k], 1);
           } else {
@@ -68,7 +63,7 @@ public class DatabaseConnection {
 
       }
     } catch (Exception e) {
-      System.out.println("Error accessing Database." + e.getMessage());
+      // System.out.println("Error accessing Database." + e.getMessage());
     }
     int min = Integer.MAX_VALUE;
     for (Map.Entry<String, Integer> entry : directorNumMovies.entrySet()) {
@@ -78,8 +73,11 @@ public class DatabaseConnection {
     }
     for (Map.Entry<String, Integer> entry : directorNumMovies.entrySet()) {
       if (entry.getValue().compareTo(min) == 0) {
-        directors.add(getDirectors(entry.getKey()));
-        // System.out.println(entry.getValue());
+        String name = getDirectors(entry.getKey());
+        if (!name.equalsIgnoreCase(excludeActor) && !name.equals("")) {
+          directors.add(name);
+        }
+
       }
     }
 
@@ -93,8 +91,8 @@ public class DatabaseConnection {
       Statement stmt = conn.createStatement();
       ResultSet result = stmt.executeQuery(query);
 
-      System.out.println(query);
-      System.out.println("______________________________________");
+      // System.out.println(query);
+      // System.out.println("______________________________________");
       while (result.next()) {
         name = result.getString("primaryname");
       }
@@ -106,16 +104,16 @@ public class DatabaseConnection {
 
   public ResultSet getResults(String query) {
     ResultSet result;
-     try{
-       Statement stmt = conn.createStatement();
-        result = stmt.executeQuery(query);
-        // System.out.println(query);
-        return result;
-   } catch (Exception e){
-     System.out.println("Error accessing Database." + e.getMessage());
-     return null;
+    try {
+      Statement stmt = conn.createStatement();
+      result = stmt.executeQuery(query);
+      // System.out.println(query);
+      return result;
+    } catch (Exception e) {
+      System.out.println("Error accessing Database." + e.getMessage());
+      return null;
 
-   }
+    }
   }
 
   public void closeConnection() {
