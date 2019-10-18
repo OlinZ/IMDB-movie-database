@@ -5,10 +5,11 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
 import java.io.IOException;
 
 public class MainWindow extends javax.swing.JFrame {
@@ -332,8 +333,10 @@ public class MainWindow extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
         System.out.println(startYear + endYear + excludeActor);
-        System.out.println(databaseConnection.getLeastMovies(Integer.parseInt(startYear), Integer.parseInt(endYear),
-                excludeActor));
+        java.util.List<Director> directors = databaseConnection.getLeastMovies(Integer.parseInt(startYear),
+                Integer.parseInt(endYear), excludeActor);
+
+        System.out.println(directors);
     }
 
     private void movieSuggestion(String movie, String genre, String year) {
